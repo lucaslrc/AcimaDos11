@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueLayers from 'vuelayers'
+import 'vuelayers/lib/style.css' // needs css-loader
 import 'bootstrap/dist/js/bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 Vue.use(VueLayers)
 Vue.config.productionTip = false

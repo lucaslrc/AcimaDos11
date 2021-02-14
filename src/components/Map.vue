@@ -16,7 +16,7 @@
         </template>
       </vl-geoloc>
 
-      <vl-marker>
+      <vl-geoloc>
         <template>
           <vl-feature v-if="latAirplane > 0 && lonAiplane > 0">
             <vl-geom-point :coordinates="[latAirplane, lonAirplane]"/>
@@ -29,7 +29,7 @@
             </vl-style-box>
           </vl-feature>
         </template>
-      </vl-marker>
+      </vl-geoloc>
 
       <vl-layer-tile id="osm">
         <vl-source-osm></vl-source-osm>
@@ -48,12 +48,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import VueLayers from 'vuelayers'
-import 'vuelayers/lib/style.css' // needs css-loader
 import axios from 'axios'
-
-Vue.use(VueLayers)
 
 export default {
   data () {
@@ -74,11 +69,14 @@ export default {
   },
   methods: {
     SearchAirplanes() {
-      axios.get(`https://opensky-network.org/api/states/all?lamin=${this.center[0]}&lomin=${this.center[1]}&lamax=${this.center[0]}&lomax=${this.center[1]}`).then(res => {
-        console.log(res[0])
-      })
-
-      
+      if (this.center[0].length < 0 && this.center[1].length < 0) {
+        alert('No coordinates, please move map.')
+      } else {
+        axios.get(`https://opensky-network.org/api/states/all?lamin=${this.center[1]}&lomin=${this.center[0]}&lamax=${this.center[1]}&lomax=${this.center[0]}`).then(res => {
+          console.log(res)
+          console.log(this.center)
+        }) 
+      }
     }
   }
 }
